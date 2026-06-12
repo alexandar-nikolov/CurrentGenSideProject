@@ -1,30 +1,19 @@
 <script setup>
+import { useRouter, useRoute } from "vue-router";
 import Button from "primevue/button";
 
-const props = defineProps({ visible: { type: Boolean, default: true } });
-const activeItem = defineModel("activeItem", {
-  default: () => ({
-    label: "Home",
-    icon: "pi pi-home",
-    description: "Select a tool to get started",
-  }),
-});
+defineProps({ visible: { type: Boolean, default: true } });
+
+const router = useRouter();
+const route = useRoute();
 
 const navItems = [
-  {
-    label: "Home",
-    icon: "pi pi-home",
-    description: "Select a tool to get started",
-  },
-  {
-    label: "Damage Library",
-    icon: "pi pi-book",
-    description: "Browse and search the damage library for references",
-  },
+  { label: "Home", icon: "pi pi-home", path: "/" },
+  { label: "Damage Library", icon: "pi pi-book", path: "/damage-library" },
   {
     label: "PDF to Instructions",
     icon: "pi pi-file",
-    description: "Convert PDFs into step-by-step instructions",
+    path: "/pdf-to-instructions",
   },
 ];
 </script>
@@ -43,10 +32,10 @@ const navItems = [
           :key="item.label"
           :label="item.label"
           :icon="item.icon"
-          :text="activeItem.label !== item.label"
-          :severity="activeItem.label === item.label ? 'primary' : 'secondary'"
+          :text="route.path !== item.path"
+          :severity="route.path === item.path ? 'primary' : 'secondary'"
           class="justify-start! w-full"
-          @click="activeItem = item"
+          @click="router.push(item.path)"
         />
       </nav>
     </aside>

@@ -4,6 +4,7 @@ import Aura from "@primeuix/themes/aura";
 import { definePreset } from "@primeuix/themes";
 import "./style.css";
 import App from "./App.vue";
+import router from "./router";
 
 const AppPreset = definePreset(Aura, {
   semantic: {
@@ -24,6 +25,7 @@ const AppPreset = definePreset(Aura, {
 });
 
 const app = createApp(App);
+app.use(router);
 app.use(PrimeVue, {
   theme: {
     preset: AppPreset,
