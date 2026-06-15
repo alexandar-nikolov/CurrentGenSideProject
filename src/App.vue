@@ -18,7 +18,9 @@ const route = useRoute();
         :description="route.meta.description"
         @toggle-sidebar="sidebarVisible = !sidebarVisible"
       />
-      <main class="flex-1 overflow-auto p-6 bg-(--bg-light)">
+      <main
+        class="flex-1 overflow-auto px-8 py-6 sm:px-12 sm:py-8 md:px-16 lg:px-24 bg-(--bg-light)"
+      >
         <RouterView />
       </main>
     </div>
