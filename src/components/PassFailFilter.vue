@@ -20,7 +20,7 @@ const options = [
           ? option.value === 'pass'
             ? 'bg-green-500/15 text-green-400 border border-green-500/40'
             : 'bg-red-500/15 text-red-400 border border-red-500/40'
-          : 'bg-(--bg) border border-(--border) text-(--text-muted) hover:text-(--text)'
+          : 'bg-(--bg) border border-(--p-select-border-color) text-(--text-muted) hover:text-(--text) hover:border-(--p-select-border-hover-color)'
       "
       @click="model = model === option.value ? null : option.value"
     >

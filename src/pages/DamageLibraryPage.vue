@@ -1,14 +1,16 @@
 <script setup>
 import { onMounted, onUnmounted } from "vue";
+import { ref } from "vue";
+
 import { usePageTabs } from "@/composables/usePageTabs";
+
+import PassFailFilter from "@/components/PassFailFilter.vue";
+import FilterSelect from "@/components/FilterSelect.vue";
+import DamageRecordCard from "@/components/DamageRecordCard.vue";
 
 import IconField from "primevue/iconfield";
 import InputIcon from "primevue/inputicon";
 import InputText from "primevue/inputtext";
-
-import PassFailFilter from "@/components/PassFailFilter.vue";
-import FilterSelect from "@/components/FilterSelect.vue";
-import { ref } from "vue";
 
 const { setTabs, clearTabs, activeTab } = usePageTabs();
 
@@ -53,6 +55,20 @@ onUnmounted(() => clearTabs());
           placeholder="All parts"
         />
       </div>
+    </div>
+    <div
+      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+    >
+      <DamageRecordCard
+        image="/src/assets/tool.jpg"
+        date="15-06-2026"
+        author="John D."
+        component="T-8"
+        part="SA"
+        status="fail"
+        v-for="i in 6"
+        :key="i"
+      />
     </div>
   </div>
   <div v-else-if="activeTab === 'drafts'">
