@@ -23,8 +23,13 @@ const navItems = [
     <aside
       class="sidebar flex flex-col shrink-0 h-full w-(--sidebar-width) bg-(--bg-dark) border-r border-(--border-dark)"
     >
-      <div class="px-5 pt-6 pb-4 border-b border-(--border-dark)">
-        <span class="text-3xl font-bold text-(--accent)">CurrentGen</span>
+      <div class="p-5 border-b border-(--border-dark)">
+        <span
+          class="text-3xl font-bold text-(--accent) cursor-pointer"
+          @click="router.push('/')"
+        >
+          CurrentGen
+        </span>
       </div>
       <nav class="flex flex-col gap-1 p-3 flex-1 overflow-y-auto">
         <Button
