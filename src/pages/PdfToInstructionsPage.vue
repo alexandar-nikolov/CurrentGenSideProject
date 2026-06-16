@@ -167,7 +167,86 @@ const settings = reactive({
 })
 
 const instructions = ref([])
-let nextId = 6
+let nextId = 10
+
+const exampleData = {
+  'English': {
+    'Step-by-step': [
+      'Ensure all personal safety equipment (PPE) is in place before starting the procedure.',
+      'Inspect the component visually for defects, cracks, or wear prior to installation.',
+      'Align the component with the mounting bracket and insert fasteners by hand first.',
+      'Torque all fasteners to the specified value of 35 Nm using a calibrated torque wrench.',
+      'Perform a final functional check and document the result in the work order system.',
+    ],
+    'Checklist': [
+      '☐ PPE checked and worn correctly',
+      '☐ Component inspected for visible defects',
+      '☐ Mounting bracket aligned',
+      '☐ Fasteners tightened to 35 Nm',
+      '☐ Final functional check completed and documented',
+    ],
+    'Summary only': [
+      'Before installation, verify PPE and inspect the component. Align with the mounting bracket, torque fasteners to 35 Nm, and complete a final functional check. Document all results in the work order system.',
+    ],
+  },
+  'Dutch': {
+    'Step-by-step': [
+      'Zorg dat alle persoonlijke beschermingsmiddelen (PBM) aanwezig zijn vóór de start.',
+      'Inspecteer het onderdeel visueel op defecten, scheuren of slijtage vóór installatie.',
+      'Lijn het onderdeel uit met de bevestigingsbeugel en draai de bevestigingsmiddelen eerst met de hand aan.',
+      'Draai alle bevestigingsmiddelen aan op 35 Nm met een gekalibreerde momentsleutel.',
+      'Voer een eindcontrole uit en documenteer het resultaat in het werkordersysteem.',
+    ],
+    'Checklist': [
+      '☐ PBM gecontroleerd en correct gedragen',
+      '☐ Onderdeel geïnspecteerd op zichtbare defecten',
+      '☐ Bevestigingsbeugel uitgelijnd',
+      '☐ Bevestigingsmiddelen aangedraaid op 35 Nm',
+      '☐ Eindcontrole uitgevoerd en gedocumenteerd',
+    ],
+    'Summary only': [
+      'Controleer voor installatie de PBM en inspecteer het onderdeel. Lijn uit met de bevestigingsbeugel, draai aan op 35 Nm en voer een eindcontrole uit. Documenteer alle resultaten in het werkordersysteem.',
+    ],
+  },
+  'German': {
+    'Step-by-step': [
+      'Stellen Sie sicher, dass alle persönlichen Schutzausrüstungen (PSA) vorhanden sind.',
+      'Überprüfen Sie das Bauteil visuell auf Defekte, Risse oder Verschleiß.',
+      'Richten Sie das Bauteil an der Montagekonsole aus und setzen Sie die Befestiger zunächst von Hand ein.',
+      'Ziehen Sie alle Befestiger mit einem kalibrierten Drehmomentschlüssel auf 35 Nm an.',
+      'Führen Sie eine abschließende Funktionskontrolle durch und dokumentieren Sie das Ergebnis.',
+    ],
+    'Checklist': [
+      '☐ PSA geprüft und korrekt getragen',
+      '☐ Bauteil auf sichtbare Defekte geprüft',
+      '☐ Montagekonsole ausgerichtet',
+      '☐ Befestiger auf 35 Nm angezogen',
+      '☐ Abschlusskontrolle durchgeführt und dokumentiert',
+    ],
+    'Summary only': [
+      'Vor der Montage PSA prüfen und Bauteil inspizieren. An der Konsole ausrichten, auf 35 Nm anziehen und Abschlusskontrolle durchführen. Alle Ergebnisse im Arbeitsauftragssystem dokumentieren.',
+    ],
+  },
+  'French': {
+    'Step-by-step': [
+      'Vérifiez que tous les équipements de protection individuelle (EPI) sont en place avant de commencer.',
+      'Inspectez visuellement le composant pour détecter tout défaut, fissure ou usure.',
+      'Alignez le composant avec le support de montage et insérez les fixations à la main en premier.',
+      'Serrez toutes les fixations à la valeur spécifiée de 35 Nm avec une clé dynamométrique étalonnée.',
+      'Effectuez une vérification fonctionnelle finale et documentez le résultat dans le système de bon de travail.',
+    ],
+    'Checklist': [
+      '☐ EPI vérifiés et portés correctement',
+      '☐ Composant inspecté pour défauts visibles',
+      '☐ Support de montage aligné',
+      '☐ Fixations serrées à 35 Nm',
+      '☐ Vérification finale effectuée et documentée',
+    ],
+    'Summary only': [
+      'Avant l\'installation, vérifiez les EPI et inspectez le composant. Alignez avec le support, serrez à 35 Nm et effectuez une vérification finale. Documentez tous les résultats dans le système de bon de travail.',
+    ],
+  },
+}
 
 function triggerUpload() {
   fileInput.value?.click()
@@ -203,13 +282,14 @@ function convert() {
   setTimeout(() => {
     converting.value = false
     converted.value = true
-    instructions.value = [
-      { id: 1, text: 'Ensure all personal safety equipment (PPE) is in place before starting the procedure.', editing: false },
-      { id: 2, text: 'Inspect the component visually for defects, cracks, or wear prior to installation.', editing: false },
-      { id: 3, text: 'Align the component with the mounting bracket and insert fasteners by hand first.', editing: false },
-      { id: 4, text: 'Torque all fasteners to the specified value of 35 Nm using a calibrated torque wrench.', editing: false },
-      { id: 5, text: 'Perform a final functional check and document the result in the work order system.', editing: false },
-    ]
+    const lang = exampleData[settings.language] ?? exampleData['English']
+    const steps = lang[settings.format] ?? lang['Step-by-step']
+    instructions.value = steps.map((text, i) => ({
+      id: i + 1,
+      text,
+      editing: false
+    }))
+    nextId = instructions.value.length + 1
   }, 1800)
 }
 
