@@ -11,6 +11,7 @@ import IconField from "primevue/iconfield";
 import InputIcon from "primevue/inputicon";
 import InputText from "primevue/inputtext";
 import Button from "primevue/button";
+import DamageRecordDialog from "@/components/damage-library/DamageRecordDialog.vue";
 
 import {
   browseRecords as initialRecords,
@@ -64,6 +65,31 @@ const filteredRecords = computed(() =>
     return true;
   }),
 );
+
+const hasActiveFilters = computed(
+  () =>
+    !!searchQuery.value ||
+    !!statusFilter.value ||
+    !!componentFilter.value ||
+    !!partFilter.value ||
+    !!damageTypeFilter.value,
+);
+
+function clearFilters() {
+  searchQuery.value = "";
+  statusFilter.value = null;
+  componentFilter.value = null;
+  partFilter.value = null;
+  damageTypeFilter.value = null;
+}
+
+const selectedRecord = ref(null);
+const dialogVisible = ref(false);
+
+function openRecord(record) {
+  selectedRecord.value = record;
+  dialogVisible.value = true;
+}
 </script>
 
 <template>
@@ -110,6 +136,15 @@ const filteredRecords = computed(() =>
           placeholder="All types"
           size="small"
         />
+        <Button
+          v-if="hasActiveFilters"
+          label="Clear filters"
+          icon="pi pi-filter-slash"
+          size="small"
+          severity="secondary"
+          text
+          @click="clearFilters"
+        />
       </div>
     </div>
 
@@ -126,6 +161,7 @@ const filteredRecords = computed(() =>
         :part="record.part"
         :status="record.status"
         :type="record.type"
+        @click="openRecord(record)"
       />
       <p
         v-if="filteredRecords.length === 0"
@@ -135,4 +171,10 @@ const filteredRecords = computed(() =>
       </p>
     </div>
   </div>
+
+  <!-- Record detail dialog -->
+  <DamageRecordDialog
+    v-model:visible="dialogVisible"
+    :record="selectedRecord"
+  />
 </template>
