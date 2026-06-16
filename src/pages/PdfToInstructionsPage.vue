@@ -91,6 +91,62 @@
 
       </div>
 
+      <!-- Output section -->
+      <template v-if="converted">
+        <div class="sec-label">Generated instructions</div>
+        <div class="card output-card">
+
+          <!-- Toolbar -->
+          <div class="toolbar">
+            <button class="btn btn-ghost btn-sm" @click="copyAll">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2"/>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+              </svg>
+              Copy all
+            </button>
+            <button class="btn btn-ghost btn-sm">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                <polyline points="14 2 14 8 20 8"/>
+              </svg>
+              Export as PDF
+            </button>
+            <button class="btn btn-ghost btn-sm">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="22" y1="2" x2="11" y2="13"/>
+                <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+              </svg>
+              Send to operator
+            </button>
+          </div>
+
+          <!-- Instruction rows -->
+          <div
+            v-for="(instr, index) in instructions"
+            :key="instr.id"
+            class="instr-row"
+            :class="{ editing: instr.editing }"
+          >
+            <div class="step-dot">{{ index + 1 }}</div>
+            <input v-if="instr.editing" v-model="instr.text" class="instr-input" @keyup.enter="instr.editing = false" />
+            <div v-else class="instr-text">{{ instr.text }}</div>
+            <button class="btn btn-ghost btn-sm" @click="toggleEdit(instr)">
+              {{ instr.editing ? 'Save' : 'Edit' }}
+            </button>
+          </div>
+
+          <button class="btn btn-ghost btn-sm" style="margin-top:10px" @click="addInstruction">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="5" x2="12" y2="19"/>
+              <line x1="5" y1="12" x2="19" y2="12"/>
+            </svg>
+            Add step
+          </button>
+
+        </div>
+      </template>
+
     </div>
   </div>
 </template>
@@ -109,6 +165,9 @@ const settings = reactive({
   format: 'Step-by-step',
   detail: 'Standard'
 })
+
+const instructions = ref([])
+let nextId = 6
 
 function triggerUpload() {
   fileInput.value?.click()
@@ -133,6 +192,7 @@ function loadFile(file) {
 function resetUpload() {
   pdfReady.value = false
   converted.value = false
+  instructions.value = []
   uploadedFile.name = ''
   uploadedFile.size = ''
 }
@@ -143,7 +203,28 @@ function convert() {
   setTimeout(() => {
     converting.value = false
     converted.value = true
+    instructions.value = [
+      { id: 1, text: 'Ensure all personal safety equipment (PPE) is in place before starting the procedure.', editing: false },
+      { id: 2, text: 'Inspect the component visually for defects, cracks, or wear prior to installation.', editing: false },
+      { id: 3, text: 'Align the component with the mounting bracket and insert fasteners by hand first.', editing: false },
+      { id: 4, text: 'Torque all fasteners to the specified value of 35 Nm using a calibrated torque wrench.', editing: false },
+      { id: 5, text: 'Perform a final functional check and document the result in the work order system.', editing: false },
+    ]
   }, 1800)
+}
+
+function toggleEdit(instr) {
+  instructions.value.forEach(i => i.editing = false)
+  instr.editing = true
+}
+
+function addInstruction() {
+  instructions.value.push({ id: nextId++, text: '', editing: true })
+}
+
+function copyAll() {
+  const text = instructions.value.map((i, idx) => `${idx + 1}. ${i.text}`).join('\n')
+  navigator.clipboard.writeText(text)
 }
 </script>
 
@@ -216,6 +297,7 @@ function convert() {
 }
 
 .settings-card { padding: 18px; }
+.output-card { padding: 16px 20px; }
 .form-group { margin-bottom: 14px; }
 
 .form-label {
@@ -266,6 +348,57 @@ function convert() {
 .btn-ghost:hover { background: #F7F7F7; color: #111111; }
 .btn-sm { padding: 5px 10px; font-size: 12px; }
 .btn-full { width: 100%; justify-content: center; }
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 0;
+  margin-bottom: 14px;
+  border-bottom: 1px solid #EFEFEF;
+}
+
+.instr-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 14px;
+  background: #F7F7F7;
+  border: 1px solid #EFEFEF;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  transition: background .15s;
+}
+
+.instr-row:hover { background: #F0EFED; border-color: #E5E5E5; }
+.instr-row.editing { background: #fff; border-color: #E8600A; }
+
+.step-dot {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #E8600A;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.instr-text { flex: 1; font-size: 13.5px; }
+
+.instr-input {
+  flex: 1;
+  font-size: 13.5px;
+  font-family: inherit;
+  border: none;
+  background: transparent;
+  outline: none;
+  color: #111111;
+}
 
 @keyframes spin {
   from { transform: rotate(0deg); }
