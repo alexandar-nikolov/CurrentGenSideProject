@@ -1,4 +1,4 @@
-vue<template>
+<template>
   <div class="page">
     <div class="content">
 
@@ -51,7 +51,7 @@ vue<template>
           <div class="card settings-card">
             <div class="form-group">
               <label class="form-label">Output language</label>
-              <select class="form-select">
+              <select v-model="settings.language" class="form-select">
                 <option>English</option>
                 <option>Dutch</option>
                 <option>German</option>
@@ -60,7 +60,7 @@ vue<template>
             </div>
             <div class="form-group">
               <label class="form-label">Instruction format</label>
-              <select class="form-select">
+              <select v-model="settings.format" class="form-select">
                 <option>Step-by-step</option>
                 <option>Checklist</option>
                 <option>Summary only</option>
@@ -68,17 +68,23 @@ vue<template>
             </div>
             <div class="form-group">
               <label class="form-label">Detail level</label>
-              <select class="form-select">
+              <select v-model="settings.detail" class="form-select">
                 <option>Standard</option>
                 <option>Concise</option>
                 <option>Detailed</option>
               </select>
             </div>
-            <button class="btn btn-primary btn-full">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <button class="btn btn-primary btn-full" :disabled="converting || converted" @click="convert">
+              <svg v-if="converting" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="animation: spin 1s linear infinite">
+                <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
+              </svg>
+              <svg v-else-if="converted" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+              <svg v-else width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <polygon points="5 3 19 12 5 21 5 3"/>
               </svg>
-              Convert to instructions
+              {{ converting ? 'Converting…' : converted ? 'Converted' : 'Convert to instructions' }}
             </button>
           </div>
         </div>
@@ -95,6 +101,14 @@ import { ref, reactive } from 'vue'
 const fileInput = ref(null)
 const pdfReady = ref(false)
 const uploadedFile = reactive({ name: '', size: '' })
+const converting = ref(false)
+const converted = ref(false)
+
+const settings = reactive({
+  language: 'English',
+  format: 'Step-by-step',
+  detail: 'Standard'
+})
 
 function triggerUpload() {
   fileInput.value?.click()
@@ -118,8 +132,18 @@ function loadFile(file) {
 
 function resetUpload() {
   pdfReady.value = false
+  converted.value = false
   uploadedFile.name = ''
   uploadedFile.size = ''
+}
+
+function convert() {
+  if (!pdfReady.value) return
+  converting.value = true
+  setTimeout(() => {
+    converting.value = false
+    converted.value = true
+  }, 1800)
 }
 </script>
 
@@ -237,8 +261,14 @@ function resetUpload() {
 
 .btn-primary { background: #E8600A; color: #fff; }
 .btn-primary:hover { background: #C44F08; }
+.btn-primary:disabled { background: #F5B990; cursor: not-allowed; }
 .btn-ghost { background: transparent; color: #555555; border: 1px solid #E5E5E5; }
 .btn-ghost:hover { background: #F7F7F7; color: #111111; }
 .btn-sm { padding: 5px 10px; font-size: 12px; }
 .btn-full { width: 100%; justify-content: center; }
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
 </style>
