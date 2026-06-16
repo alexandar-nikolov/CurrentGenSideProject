@@ -1,4 +1,4 @@
-<template>
+vue<template>
   <div class="page">
     <div class="content">
 
@@ -7,17 +7,41 @@
         <!-- Upload zone -->
         <div>
           <div class="sec-label">Upload PDF</div>
-          <div class="upload-zone">
-            <div class="upload-icon">
-              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                <polyline points="14 2 14 8 20 8"/>
-                <line x1="16" y1="13" x2="8" y2="13"/>
-                <line x1="16" y1="17" x2="8" y2="17"/>
+          <div
+            class="upload-zone"
+            :class="{ uploaded: pdfReady }"
+            @click="!pdfReady && triggerUpload()"
+            @dragover.prevent
+            @drop.prevent="handleDrop"
+          >
+            <template v-if="!pdfReady">
+              <div class="upload-icon">
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                  <polyline points="14 2 14 8 20 8"/>
+                  <line x1="16" y1="13" x2="8" y2="13"/>
+                  <line x1="16" y1="17" x2="8" y2="17"/>
+                </svg>
+              </div>
+              <p>Upload PDF or drag and drop</p>
+              <small>PDF — max 50 MB</small>
+              <input ref="fileInput" type="file" accept=".pdf" style="display:none" @change="handleFile" />
+            </template>
+            <template v-else>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2E7D51" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"/>
               </svg>
-            </div>
-            <p>Upload PDF or drag and drop</p>
-            <small>PDF — max 50 MB</small>
+              <div>
+                <div class="upload-filename">{{ uploadedFile.name }}</div>
+                <div class="upload-filesize">{{ uploadedFile.size }} · Ready to convert</div>
+              </div>
+              <button class="btn btn-ghost btn-sm" style="margin-left:auto" @click.stop="resetUpload">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+                Remove
+              </button>
+            </template>
           </div>
         </div>
 
@@ -66,6 +90,37 @@
 </template>
 
 <script setup>
+import { ref, reactive } from 'vue'
+
+const fileInput = ref(null)
+const pdfReady = ref(false)
+const uploadedFile = reactive({ name: '', size: '' })
+
+function triggerUpload() {
+  fileInput.value?.click()
+}
+
+function handleFile(e) {
+  const file = e.target.files[0]
+  if (file) loadFile(file)
+}
+
+function handleDrop(e) {
+  const file = e.dataTransfer.files[0]
+  if (file && file.type === 'application/pdf') loadFile(file)
+}
+
+function loadFile(file) {
+  uploadedFile.name = file.name
+  uploadedFile.size = (file.size / (1024 * 1024)).toFixed(1) + ' MB'
+  pdfReady.value = true
+}
+
+function resetUpload() {
+  pdfReady.value = false
+  uploadedFile.name = ''
+  uploadedFile.size = ''
+}
 </script>
 
 <style scoped>
@@ -111,14 +166,23 @@
   transition: all .15s;
 }
 
-.upload-zone:hover {
-  border-color: #E8600A;
-  background: #FFF0E8;
+.upload-zone:hover { border-color: #E8600A; background: #FFF0E8; }
+
+.upload-zone.uploaded {
+  border-color: #2E7D51;
+  background: #D6F0E2;
+  padding: 18px 20px;
+  flex-direction: row;
+  justify-content: flex-start;
+  text-align: left;
+  cursor: default;
 }
 
 .upload-icon { color: #999999; }
 .upload-zone p { font-size: 13.5px; color: #555555; }
 .upload-zone small { font-size: 12px; color: #999999; }
+.upload-filename { font-size: 13.5px; font-weight: 500; }
+.upload-filesize { font-size: 12px; color: #999999; margin-top: 2px; }
 
 .card {
   background: #ffffff;
@@ -128,7 +192,6 @@
 }
 
 .settings-card { padding: 18px; }
-
 .form-group { margin-bottom: 14px; }
 
 .form-label {
@@ -174,5 +237,8 @@
 
 .btn-primary { background: #E8600A; color: #fff; }
 .btn-primary:hover { background: #C44F08; }
+.btn-ghost { background: transparent; color: #555555; border: 1px solid #E5E5E5; }
+.btn-ghost:hover { background: #F7F7F7; color: #111111; }
+.btn-sm { padding: 5px 10px; font-size: 12px; }
 .btn-full { width: 100%; justify-content: center; }
 </style>
