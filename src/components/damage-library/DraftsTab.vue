@@ -79,7 +79,7 @@ function completionPercent(row) {
                 v-for="field in ['image', 'component', 'part', 'type']"
                 :key="field"
                 :value="field === 'type' ? 'damage type' : field"
-                :severity="data[field] ? 'success' : 'secondary'"
+                :severity="data[field] ? 'info' : 'warning'"
                 :icon="data[field] ? 'pi pi-check' : 'pi pi-times'"
                 class="capitalize text-xs!"
               />
@@ -137,12 +137,12 @@ function completionPercent(row) {
           <template #body="{ data }">
             <div class="flex gap-2">
               <Button
-                icon="pi pi-pencil"
-                label="Edit"
+                icon="pi pi-eye"
+                label="Review"
                 size="small"
                 severity="secondary"
                 rounded
-                aria-label="Edit"
+                aria-label="Review"
                 @click="emit('edit-draft', data)"
               />
               <Button

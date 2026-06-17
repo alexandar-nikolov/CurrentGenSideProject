@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, onUnmounted, ref } from "vue";
+import { onMounted, onUnmounted, ref, nextTick } from "vue";
 
 import { usePageTabs } from "@/composables/usePageTabs";
 import BrowseTab from "@/components/damage-library/BrowseTab.vue";
@@ -10,9 +10,10 @@ const { setTabs, clearTabs, activeTab } = usePageTabs();
 
 const newRecordFormRef = ref(null);
 
-function onEditDraft(draft) {
-  newRecordFormRef.value?.fillFromDraft(draft);
+async function onEditDraft(draft) {
   activeTab.value = "new";
+  await nextTick();
+  newRecordFormRef.value?.fillFromDraft(draft);
 }
 
 onMounted(() =>
