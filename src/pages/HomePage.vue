@@ -10,7 +10,7 @@
           </svg>
         </div>
         <h2 class="card-title">Damage identifier</h2>
-        <p class="card-description">Upload a photo and let AI Identify...</p>
+        <p class="card-description">Upload a photo and let AI Identify damage type, severity and confidence level.</p>
       </router-link>
 
       <router-link to="/pdf-to-instructions" class="dashboard-card">
@@ -20,7 +20,7 @@
           </svg>
         </div>
         <h2 class="card-title">PDF to Instructions</h2>
-        <p class="card-description">Convert PDF documents into...</p>
+        <p class="card-description">Convert PDF documents into structured, step-by-step work instructions.</p>
       </router-link>
      
     </div>
