@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Side Project - Work Instructions Platform</title>
+  <script src="script.js" defer></script>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div id="app">
+  <aside id="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-name">Side Project</div>
+      <div class="brand-subtitle">Work Instructions Platform</div>
+    </div>
+    <hr class="brand-divider">
+
+    <nav class="sidebar-nav">
+      <a href="/home" class="nav-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/>
+          <path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+        </svg>
+        <span>Home</span>
+      </a>
+      <button class="nav-btn active" data-page="damage-identifier">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 7V5a2 2 0 0 1 2-2h2"/>
+          <path d="M17 3h2a2 2 0 0 1 2 2v2"/>
+          <path d="M21 17v2a2 2 0 0 1-2 2h-2"/>
+          <path d="M7 21H5a2 2 0 0 1-2-2v-2"/>
+          <circle cx="12" cy="12" r="3"/>
+          <path d="m16 16-1.9-1.9"/>
+        </svg>
+        <span>Damage identifier</span>
+      </button>
+      <a href="/pdftostep" class="nav-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/>
+          <path d="M14 2v4a2 2 0 0 0 2 2h4"/>
+          <path d="M10 9H8"/>
+          <path d="M16 13H8"/>
+          <path d="M16 17H8"/>
+        </svg>
+        <span>PDF to Instructions</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">(c) 2026 Side Project</div>
+  </aside>
+
+  <main id="main-content">
+
+    <!-- DAMAGE IDENTIFIER PAGE -->
+    <section id="page-damage-identifier" class="page active">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Damage identifier</h1>
+          <p class="page-subtitle">Upload a photo to identify damage type and severity</p>
+        </div>
+        <div class="avatar-circle">A</div>
+      </div>
+
+      <div class="content-body">
+        <div class="section-label">Upload zone</div>
+        <div class="upload-zone" id="damage-upload-zone">
+            <div class="upload-icon-circle">
+              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                <circle cx="8.5" cy="8.5" r="1.5"/>
+                <polyline points="21 15 16 10 5 21"/>
+              </svg>
+            </div>
+            <p class="upload-text">Upload photo or drag and drop</p>
+            <p class="upload-hint">JPG, PNG, WEBP supported</p>
+            <label class="btn-browse" for="damage-file-input">Browse file</label>
+            <input type="file" id="damage-file-input" accept="image/*" hidden>
+        </div>
+
+        <div class="section-label" id="preview-section-label" style="display:none;">Preview card</div>
+        <div class="card preview-card" id="preview-card" style="display:none;">
+          <div class="preview-img" id="preview-img"></div>
+          <div class="preview-info">
+            <p class="preview-filename" id="preview-filename"></p>
+            <p class="preview-size" id="preview-size"></p>
+          </div>
+          <button class="btn-analyse" id="btn-analyse">Analyse</button>
+        </div>
+
+        <div class="section-label" id="result-section-label" style="display:none;">Result card</div>
+        <div class="card result-card" id="result-card" style="display:none;">
+          <div class="result-row">
+            <span class="result-label">Damage type</span>
+            <span class="result-value">Visible crack left side</span>
+          </div>
+          <span class="badge badge-medium badge-severity">Medium</span>
+          <div class="result-row result-row-confidence">
+            <span class="result-label">Confidence</span>
+            <div class="confidence-bar-track">
+              <div class="confidence-bar-fill" style="width:88%"></div>
+            </div>
+            <span class="confidence-pct">88%</span>
+          </div>
+          <div class="result-row">
+            <span class="result-label">Description</span>
+            <textarea class="result-textarea" rows="3" placeholder="Add notes or observations..."></textarea>
+          </div>
+          <div class="result-actions">
+            <button class="btn-approved">
+              <span>&#10003;</span>
+              <span>Approved</span>
+            </button>
+            <button class="btn-review">
+              <span>&#9888;</span>
+              <span>Send for review</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="section-label">Recent history</div>
+        <div class="card history-card">
+          <div class="history-header">
+            <span class="history-title-text">Recent history</span>
+            <a href="#" class="history-view-all">View all &#8250;</a>
+          </div>
+          <div class="history-list">
+            <div class="history-item">
+              <div class="history-thumb"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>
+              <div class="history-info">
+                <div class="history-name">Analyse 1</div>
+                <div class="history-damage">Surface scratch</div>
+              </div>
+              <span class="badge badge-low">Low</span>
+              <span class="history-time">&#128340; 1 min ago</span>
+            </div>
+            <div class="history-item">
+              <div class="history-thumb"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>
+              <div class="history-info">
+                <div class="history-name">Analyse 2</div>
+                <div class="history-damage">Visible crack left side</div>
+              </div>
+              <span class="badge badge-medium">Medium</span>
+              <span class="history-time">&#128340; 14 min ago</span>
+            </div>
+            <div class="history-item">
+              <div class="history-thumb"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>
+              <div class="history-info">
+                <div class="history-name">Analyse 3</div>
+                <div class="history-damage">Deep structural fracture</div>
+              </div>
+              <span class="badge badge-high">High</span>
+              <span class="history-time">&#128340; 1 hr ago</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+</body>
+</html>
