@@ -150,6 +150,12 @@ a {
   margin-top: 0.125em; 
 }
 
+.page-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75em;
+}
+
 .avatar-circle {
   width: 3em; 
   height: 3em; 
@@ -249,6 +255,25 @@ a {
 .btn-review:hover { 
   background: #fef3c7; 
   border-color: #fcd34d; 
+}
+
+.btn-reference {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.5em 1em;
+  border: 0.0625em solid #cbd5e1;
+  border-radius: 0.5em;
+  font-size: 0.875em;
+  font-weight: 500;
+  color: #334155;
+  background: #fff;
+  transition: all 0.2s;
+}
+.btn-reference:hover {
+  border-color: #FA7315;
+  color: #FA7315;
+  background: #fff5f0;
 }
 
 /*  Section Labels  */
