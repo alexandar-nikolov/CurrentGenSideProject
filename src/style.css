@@ -1,0 +1,33 @@
+@import "tailwindcss";
+@import "primeicons/primeicons.css";
+
+:root {
+  --accent: #f97316;
+  --accent-fg: #ffffff;
+  --bg: #ffffff;
+  --bg-light: #f3f3f3;
+  --bg-dark: #301300;
+  --text: #111827;
+  --text-muted: #94a3b8;
+  --border: #e5e7eb;
+  --border-dark: #5e3503;
+  --sidebar-width: 17rem;
+  --radius: 0.5rem;
+}
+
+.sidebar {
+  --p-button-text-secondary-color: #c8c8c8;
+  --p-button-text-secondary-hover-background: rgba(255, 255, 255, 0.08);
+}
+
+/* Sidebar open/close transition */
+.sidebar-clip {
+  width: var(--sidebar-width);
+  flex-shrink: 0;
+  overflow: hidden;
+  transition: width 0.25s ease;
+}
+
+.sidebar-collapsed {
+  width: 0 !important;
+}
