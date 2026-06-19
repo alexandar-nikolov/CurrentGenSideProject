@@ -5,6 +5,7 @@ defineProps({
   label: { type: String, required: true },
   options: { type: Array, required: true },
   placeholder: { type: String, default: "All" },
+  size: { type: String, default: "medium" },
 });
 
 const model = defineModel({ default: null });
@@ -12,15 +13,20 @@ const model = defineModel({ default: null });
 
 <template>
   <div class="flex items-center gap-1.5 min-w-0">
-    <span class="text-sm text-(--text-muted) shrink-0 mr-1">{{ label }}</span>
+    <span v-if="label" class="text-sm text-(--text-muted) shrink-0 mr-1">{{
+      label
+    }}</span>
     <Select
       v-model="model"
       :options="options"
       :placeholder="placeholder"
       filter
       show-clear
-      size="small"
-      class="w-44 min-w-0 flex-1 sm:flex-none"
+      :size="size"
+      :class="[
+        'min-w-0 flex-1 sm:flex-none w-full',
+        size === 'small' ? 'min-w-44 max-w-44' : '',
+      ]"
       panel-class="filter-select-panel"
     />
   </div>
