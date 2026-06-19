@@ -55,6 +55,12 @@
   }
 }
 
+@media (min-width: 1024px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
 .dashboard-card {
   display: flex;
   flex-direction: column;
