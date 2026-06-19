@@ -10,6 +10,7 @@ const route = useRoute();
 const navItems = [
   { label: "Home", icon: "pi pi-home", path: "/" },
   { label: "Damage Library", icon: "pi pi-book", path: "/damage-library" },
+  { label: "Damage Identifier", icon: "pi pi-camera", path: "/damage-identifier" },
   {
     label: "PDF to Instructions",
     icon: "pi pi-file",

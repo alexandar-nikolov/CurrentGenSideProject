@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import HomePage from "@/pages/HomePage.vue";
 import DamageLibraryPage from "@/pages/DamageLibraryPage.vue";
 import PdfToInstructionsPage from "@/pages/PdfToInstructionsPage.vue";
+import DamageIdentifierPage from "@/pages/DamageIdentifierPage.vue";
 
 export default createRouter({
   history: createWebHistory(),
@@ -22,6 +23,15 @@ export default createRouter({
         label: "Damage Library",
         icon: "pi pi-book",
         description: "Browse and search the damage library for references",
+      },
+    },
+    {
+      path: "/damage-identifier",
+      component: DamageIdentifierPage,
+      meta: {
+        label: "Damage Identifier",
+        icon: "pi pi-camera",
+        description: "Upload a photo to identify damage type and severity",
       },
     },
     {
