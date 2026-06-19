@@ -2,6 +2,16 @@
 <div class="fdashboard-container">
 
     <div class="dashboard-grid">
+
+      <router-link to="/damage-library" class="dashboard-card">
+        <div class="card-icon-container icon-bg-indigo">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" style="width: 2rem; height: 2rem;">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" />
+          </svg>
+        </div>
+        <h2 class="card-title">Damage Library</h2>
+        <p class="card-description">Browse and search the damage reference library for past records and examples.</p>
+      </router-link>
       
       <router-link to="/damage-identifier" class="dashboard-card">
         <div class="card-icon-container icon-bg-blue">
@@ -13,15 +23,7 @@
         <p class="card-description">Upload a photo and let AI identify damage type, severity and confidence level.</p>
       </router-link>
 
-      <router-link to="/damage-library" class="dashboard-card">
-        <div class="card-icon-container icon-bg-indigo">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" style="width: 2rem; height: 2rem;">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" />
-          </svg>
-        </div>
-        <h2 class="card-title">Damage Library</h2>
-        <p class="card-description">Browse and search the damage reference library for past records and examples.</p>
-      </router-link>
+      
 
       <router-link to="/pdf-to-instructions" class="dashboard-card">
         <div class="card-icon-container icon-bg-blue">
