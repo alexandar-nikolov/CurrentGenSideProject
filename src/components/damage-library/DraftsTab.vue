@@ -33,7 +33,7 @@ function completionPercent(row) {
       </p>
     </div>
 
-    <div class="rounded-lg overflow-hidden shadow-sm">
+    <div class="rounded-lg overflow-hidden shadow-sm overflow-x-auto">
       <DataTable :value="drafts" tableStyle="min-width: 50rem" striped-rows>
         <!-- Image -->
         <Column header="Image" style="width: 80px">

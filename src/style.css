@@ -32,6 +32,17 @@
   width: 0 !important;
 }
 
+/* On mobile: sidebar is a fixed overlay above content */
+@media (max-width: 767px) {
+  .sidebar-clip {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    z-index: 50;
+  }
+}
+
 .dashboard-container {
   display: flex;
   align-items: center;

@@ -328,6 +328,11 @@ function copyAll() {
   margin-bottom: 20px;
 }
 
+@media (max-width: 640px) {
+  .page { padding: 16px; }
+  .two-col { grid-template-columns: 1fr; }
+}
+
 .sec-label {
   font-size: 11px;
   font-weight: 600;
@@ -431,6 +436,7 @@ function copyAll() {
 
 .toolbar {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 8px;
   padding: 12px 0;

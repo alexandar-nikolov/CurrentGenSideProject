@@ -16,7 +16,7 @@ const { tabs, activeTab } = usePageTabs();
 
 <template>
   <header
-    class="flex items-center gap-4 py-6 px-4 shrink-0 bg-(--bg) border-b border-(--border) text-(--text)"
+    class="flex items-center gap-4 py-4 px-4 shrink-0 bg-(--bg) border-b border-(--border) text-(--text)"
   >
     <Button
       icon="pi pi-bars"
@@ -26,16 +26,18 @@ const { tabs, activeTab } = usePageTabs();
       aria-label="Toggle sidebar"
       @click="emit('toggleSidebar')"
     />
-    <div class="flex flex-col">
-      <h1 class="text-2xl font-bold">{{ title }}</h1>
-      <p class="text-sm text-(--text-muted)">{{ description }}</p>
+    <div class="flex flex-col min-w-0">
+      <h1 class="text-xl sm:text-2xl font-bold truncate">{{ title }}</h1>
+      <p class="text-sm text-(--text-muted) truncate">{{ description }}</p>
     </div>
   </header>
-  <Tabs v-if="tabs.length > 0" v-model:value="activeTab" class="px-4 shadow-sm">
-    <TabList>
-      <Tab v-for="tab in tabs" :key="tab.value" :value="tab.value">
-        {{ tab.label }}
-      </Tab>
-    </TabList>
-  </Tabs>
+  <div v-if="tabs.length > 0" class="overflow-x-auto shrink-0">
+    <Tabs v-model:value="activeTab" class="px-4 shadow-sm">
+      <TabList>
+        <Tab v-for="tab in tabs" :key="tab.value" :value="tab.value">
+          {{ tab.label }}
+        </Tab>
+      </TabList>
+    </Tabs>
+  </div>
 </template>

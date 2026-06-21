@@ -1,5 +1,5 @@
 <template>
-<div class="fdashboard-container">
+<div class="dashboard-container">
 
     <div class="dashboard-grid">
 

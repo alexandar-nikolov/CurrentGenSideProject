@@ -157,7 +157,7 @@ onUnmounted(() => { if (toastTimer) clearTimeout(toastTimer); });
     </div>
 
     <!-- Centered content column -->
-    <div class="max-w-[70%] mx-auto w-full flex flex-col gap-2">
+    <div class="max-w-2xl mx-auto w-full flex flex-col gap-2">
 
       <!-- Upload zone -->
       <p class="sec-label">Upload zone</p>
@@ -207,7 +207,7 @@ onUnmounted(() => { if (toastTimer) clearTimeout(toastTimer); });
               <p class="text-sm font-medium text-slate-700">{{ previewFilename }}</p>
               <p class="text-xs text-slate-500 mt-0.5">{{ previewFileSize }}</p>
             </div>
-            <div class="flex items-center gap-2">
+            <div class="flex flex-wrap items-center gap-2">
               <button class="reset-btn" title="Clear and start over" @click="resetUpload">
                 <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
@@ -244,7 +244,7 @@ onUnmounted(() => { if (toastTimer) clearTimeout(toastTimer); });
 
             <div class="flex items-center gap-3 mb-4">
               <span class="text-sm font-medium text-slate-500">Confidence</span>
-              <div class="flex-1 h-2.5 rounded-full bg-slate-100 overflow-hidden max-w-[300px]">
+              <div class="flex-1 h-2.5 rounded-full bg-slate-100 overflow-hidden">
                 <div
                   class="confidence-bar h-full rounded-full bg-(--accent)"
                   :style="{ width: confidenceWidth + '%' }"
